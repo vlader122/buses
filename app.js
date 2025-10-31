@@ -8,6 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const passengerPaidCheckbox = document.getElementById('passengerPaid'); // <-- AÑADIR ESTA LÍNEA
     const assignButton = document.getElementById('assignButton');
     
+    const importDataText = document.getElementById('importDataText');
+    const importButton = document.getElementById('importButton');
+    const exportButton = document.getElementById('exportButton');
 
     // Variable para guardar los datos de los asientos
     // Intenta cargar desde localStorage, o crea un array vacío si no hay nada
@@ -174,9 +177,62 @@ function handleSeatClick(event) {
         localStorage.setItem('busSeats', JSON.stringify(seatData));
     }
 
+        function importData() {
+        const dataToImport = importDataText.value.trim();
+
+        if (dataToImport === '') {
+            alert('El campo de texto está vacío. Pega tus datos primero.');
+            return;
+        }
+
+        try {
+            // 1. Intentamos validar que es un JSON correcto
+            const parsedData = JSON.parse(dataToImport);
+
+            // 2. Verificación simple (Opcional pero recomendado)
+            if (!Array.isArray(parsedData) || parsedData.length === 0 || !parsedData[0].hasOwnProperty('id')) {
+                alert('Los datos no parecen tener el formato correcto de asientos.');
+                return;
+            }
+            
+            // 3. Si todo está bien, guardamos en localStorage
+            localStorage.setItem('busSeats', dataToImport);
+            
+            // 4. Recargamos los datos y la vista
+            seatData = parsedData; // Actualiza la variable en memoria
+            renderBus(); // Redibuja el bus
+            
+            alert('¡Datos importados con éxito! El bus ha sido actualizado.');
+            importDataText.value = ''; // Limpia el campo de texto
+
+        } catch (error) {
+            alert('Error al importar: Los datos no son un JSON válido.\n\n' + error);
+        }
+    }
+
+    /**
+     * Exporta los datos actuales de localStorage al campo de texto.
+     */
+    function exportData() {
+        // Obtenemos los datos actuales (que están en la variable seatData)
+        // Usamos JSON.stringify con formato (null, 2) para que sea legible
+        console.log(this.seatData);
+        
+        const dataToExport = JSON.stringify(seatData, null, 2);
+        
+        // Los ponemos en el campo de texto para que el usuario los pueda copiar
+        importDataText.value = dataToExport;
+        
+        alert('Datos actuales listos en el campo de texto. ¡Cópialos para guardarlos!');
+    }
+
+    // --- 5. Asignar eventos a los nuevos botones ---
+    importButton.addEventListener('click', importData);
+    exportButton.addEventListener('click', exportData);
 
     // --- 3. Iniciar la aplicación ---
     assignButton.addEventListener('click', assignSeat);
     initializeBus();
 
 });
+
