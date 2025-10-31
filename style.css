@@ -1,0 +1,110 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+}
+
+h1 {
+    color: #333;
+}
+
+/* Controles para reservar */
+.booking-controls {
+    margin-bottom: 20px;
+}
+
+#passengerName {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#assignButton {
+    padding: 8px 12px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#assignButton:hover {
+    background-color: #0056b3;
+}
+
+/* Contenedor del bus */
+.bus-container {
+    perspective: 800px; /* Efecto 3D simple */
+}
+
+/* * Usamos CSS Grid para el mapa de asientos. 
+ * 4 columnas, con un espacio en medio (el pasillo).
+ * 'grid-template-columns' define las 4 columnas de asientos y 1 columna para el pasillo.
+ */
+#seat-map {
+    display: grid;
+    /* 2 asientos, 1 pasillo, 2 asientos */
+    grid-template-columns: 1fr 1fr 0.5fr 1fr 1fr; 
+    gap: 10px;
+    background-color: #fff;
+    border: 2px solid #aaa;
+    padding: 15px;
+    border-radius: 5px;
+    transform: rotateX(20deg); /* Pequeña inclinación 3D */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.seat {
+    width: 80px;  /* Más ancho (antes 40px) */
+    height: 60px; /* Más alto (antes 40px) */
+    border: 1px solid #ccc;
+    border-radius: 8px; /* Un poco más redondeado */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;     /* Letra un poco más grande */
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    
+    /* Propiedades clave para el texto */
+    text-align: center;    /* Centra el nombre si se parte en dos líneas */
+    word-break: break-word; /* Permite que nombres largos se partan */
+    padding: 5px;          /* Espacio para que el texto no toque los bordes */
+    
+    /* Ya NO necesitamos las propiedades de 'overflow', 'text-overflow', etc. */
+}
+/* Columna del pasillo */
+.aisle-spacer {
+    grid-column: 3; /* Esto pone el elemento en la 3ra columna (nuestro pasillo) */
+    visibility: hidden; /* Lo hace invisible */
+}
+
+.seat.libre {
+    background-color: #e0e0e0; /* Gris */
+}
+
+.seat.libre:hover {
+    background-color: #cccccc;
+}
+
+.seat.ocupado {
+    background-color: #ffe082; /* Amarillo (Pendiente de pago) */
+    color: #333;
+}
+
+.seat.pagado {
+    background-color: #a5d6a7; /* Verde (Pagado) */
+    color: #000;
+}
+
+.seat.selected {
+    background-color: #bbdefb; /* Azul (Seleccionado) */
+    border: 3px solid #007bff;
+}

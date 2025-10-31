@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Asientos de Bus</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>Administrador de Asientos (42 Asientos)</h1>
+
+    <div class="booking-controls">
+        <input type="text" id="passengerName" placeholder="Nombre del pasajero...">
+        
+        <label for="passengerPaid">¿Pagado?</label>
+        <input type="checkbox" id="passengerPaid">
+        
+        <button id="assignButton">Asignar Asiento</button>
+    </div>
+
+    <div class="bus-container">
+        <div id="seat-map">
+            </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
